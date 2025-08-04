@@ -1,7 +1,82 @@
-# Requirements
+## Instructions
+
+### Docker Setup 🐳
+
+#### 1. Configure Environment Variables.
+```sh
+cp .env.example .env && vim .env
+```
+#### 2. Run Docker Containers.
+```sh
+docker compose --profile 'web' up -d
+```
+#### 3. Apply Migrations.
+```sh
+docker compose exec 'web' uv run /app/src/manage.py migrate
+```
+#### 4. Create superuser.
+```sh
+docker compose exec 'web' uv run /app/src/manage.py createsuperuser
+```
+#### 5. Populate test data into DB.
+```sh
+docker compose exec 'web' uv run /app/src/manage.py generate_data --wallets-count 10 --tx-range 100 1000
+```
+#### 6. Browse APIs.
+```sh
+open "http://localhost:8000/api/v1/finances/transactions/"
+```
+#### 7. Run Tests.
+```sh
+docker compose exec 'web' uv run /app/src/manage.py test src --no-input 
+```
+---
+
+### Local Django + Docker DB:
+#### 1. Configure Environment Variables.
+```sh
+cp .env.example .env && vim .env
+```
+#### 2. Run db (PSQL) Docker Container.
+```sh
+docker compose --profile 'db' up -d
+```
+#### 3. Install venv && requirements by using [UV](https://docs.astral.sh/uv/).
+```sh
+uv sync
+source .venv/bin/activate
+```
+#### 3. Apply Migrations.
+```sh
+python ./src/manage.py migrate
+```
+#### 4. Create superuser.
+```sh
+python ./src/manage.py createsuperuser
+```
+#### 5. Populate test data into DB.
+```sh
+python ./src/manage.py generate_data --wallets-count 10 --tx-range 100 1000
+```
+#### 6. Browse APIs.
+```sh
+open "http://localhost:8000/api/v1/finances/transactions/"
+```
+#### 7. Run Tests.
+```sh
+python ./src/manage.py test src --no-input
+```
+
+---
+
+---
+
+---
+
+## Requirements
 Develop REST API server using **django-rest-framework** with pagination, sorting and filtering for two models:
 
-## DB Models:
+### DB Models:
 - **Wallet**
 	- `id`
 	- `label` *(is a string field)*
@@ -16,13 +91,13 @@ Develop REST API server using **django-rest-framework** with pagination, sorting
 
 > Where **txid** is required unique string field, **amount** is a number with 18-digits precision, **label** is a string field, **balance** is a summary of all transactions's amounts. Transaction amount may be negative. Wallet balance should NEVER be negative
 
-## Tech Stack:
+### Tech Stack:
 - **Python**: `3.11+`
 - **Database**: `MySQL` or `Postgres`
 - **Frameworks**: `django-rest-framework`
 - **API specification:** [JSON:API](https://jsonapi.org/format/) *(you are free to use [this](https://django-rest-framework-json-api.readthedocs.io/en/stable/) library)*
 
-## Will Be Your Advantage:
+### Will Be Your Advantage:
 - [ ] Test coverage
 - [ ] Any linter usage
 - [ ] Quick start app guide if you create your own docker-compose or Dockerfiles

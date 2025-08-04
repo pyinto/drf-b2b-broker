@@ -35,3 +35,5 @@ docker-cmd-manage *CMD:
   just docker-cmd uv run /app/src/manage.py {{CMD}}
 docker-migrate:
   just docker-cmd-manage migrate
+docker-tests:
+  just docker-cmd-manage test src --no-input
