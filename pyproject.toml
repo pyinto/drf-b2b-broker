@@ -1,0 +1,40 @@
+[project]
+name = "drf-b2b-broker"
+version = "0.1.0"
+description = "Tech Task for B2B Broker"
+readme = "README.md"
+requires-python = ">=3.13"
+
+
+dependencies = [
+    "django>=5.2.4",
+    "psycopg>=3.2.9",
+    "djangorestframework>=3.16.0",
+    "djangorestframework-jsonapi>=8.0.0",
+    "django-filter>=25.1",
+]
+
+default-groups = "all"
+
+[dependency-groups]
+
+dev = [
+  {include-group = "lint"},
+  {include-group = "test"},
+  {include-group = "debug"},
+]
+
+lint = [
+    "pre-commit>=4.2.0",
+    "ruff>=0.12.7",
+]
+test = [
+    "faker>=37.5.3",
+    "factory-boy>=3.3.3",
+]
+debug = [
+    "python-dotenv>=1.1.1",
+    "django-crispy-forms>=2.4",
+    "django-debug-toolbar>=6.0.0",
+    "django-extensions>=4.1",
+]
