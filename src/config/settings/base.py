@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework_json_api",
     "models.users",
+    "models.finances",
 ]
 
 AUTH_USER_MODEL = "users.User"
