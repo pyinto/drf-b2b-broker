@@ -69,6 +69,34 @@ python ./src/manage.py test src --no-input
 
 ---
 
+### Run PSQL Benchmarks 
+#### 1. Make sure you have `pgbench (17.5)` installed.
+```sh
+pgbench -V
+```
+
+#### 2. Run Benchmarks by using [Justfile](https://github.com/casey/just).
+```
+just pgbench-all
+```
+#### 2.1. Or run directly by using next cmd.
+```shell
+BENCHMARK_QUERY_FINANCES_DIR="./src/models/finances/tests/pgbench_queries"
+
+# Only on first run:
+pgbench --initialize
+
+pgbench                                                          \
+	--client=10                                              \
+	--jobs=3                                                 \
+	--time=30                                                \
+	--protocol="prepared"                                    \
+	--progress=1                                             \
+	--file="${BENCHMARK_QUERY_FINANCES_DIR}/tx-insert.sql"
+```
+
+---
+
 ---
 
 ---

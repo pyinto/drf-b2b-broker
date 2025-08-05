@@ -17,8 +17,8 @@ class TransactionFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = "finances.Transaction"
 
+    amount = factory.Faker("pydecimal", left_digits=60, right_digits=18)
     wallet = factory.SubFactory(WalletFactory)
-    amount = factory.Faker("pydecimal", left_digits=12, right_digits=18)
     txid = factory.Faker("uuid4")
 
     def __new__(cls, *args, **kwargs) -> "WalletFactory.Meta.model":

@@ -1,0 +1,10 @@
+#.envrc.example
+dotenv_if_exists .env
+
+
+# PSQL auth for cli tools, etc.
+export PGPASSWORD="${POSTGRES_PASSWORD}"
+export PGDATABASE="${POSTGRES_DB}"
+export PGHOST="${POSTGRES_HOST}"
+export PGPORT="${POSTGRES_PORT}"
+export PGUSER="${POSTGRES_USER}"

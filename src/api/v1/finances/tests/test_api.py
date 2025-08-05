@@ -258,5 +258,5 @@ class TransactionAPIIntegrationTestCase(APITransactionTestCase):
             response = self.view_list(request)
 
         self.assertEqual(response.status_code, 200, response.data)
-        logger.info(ctx.captured_queries)
+        logger.info(ctx.captured_queries[1])
         self.assertEqual(len(ctx.captured_queries), 2)

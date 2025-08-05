@@ -11,16 +11,16 @@ class Command(BaseCommand):
         parser.add_argument(
             "--wallets-count",
             type=int,
-            default=5,
-            help="Number of wallets to create (default: 5)",
+            default=20,
+            help="Number of wallets to create.",
         )
 
         parser.add_argument(
             "--tx-range",
             nargs=2,  # Expects exactly two values
             type=int,
-            default=[10, 100],  # Default must match nargs expectation (a list of 2 ints)
-            help="Min and Max transactions per wallet (e.g., --tx-range 10 100). Default: 10 100",
+            default=[1, 10_000],  # Default must match nargs expectation (a list of 2 ints)
+            help="Min and Max transactions per wallet (e.g., --tx-range 10 100).",
         )
 
     def handle(self, *args, **options):
@@ -34,8 +34,11 @@ class Command(BaseCommand):
         for _ in range(wallets_count):
             wallet = WalletFactory()
             tx_count = random.randrange(*tx_range)
-            for _ in range(tx_count):
-                TransactionFactory(wallet=wallet)
+            w_tx = TransactionFactory.build_batch(
+                size=tx_count,
+                **{"wallet": wallet},
+            )
+            Transaction.objects.bulk_create(w_tx)
             self.stdout.write(f" - {wallet} - {tx_count} transactions created...")
 
         tx_count_after = Transaction.objects.count()
